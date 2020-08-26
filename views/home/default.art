@@ -1,0 +1,66 @@
+{{extend './common/layout.art'}}
+<!--  -->
+{{block 'css'}}
+<link rel="stylesheet" href="/home/css/index.css">
+<!--  -->
+{{/block}}
+<!--  -->
+{{block 'main'}}
+<!--  -->
+{{include './common/header.art'}}
+<!-- 文章列表开始 -->
+<ul class="list w1100">
+    {{each articles.records}}
+    <li class="{{$index%2 == 0 ? 'fl' : 'fr'}}">
+        <a href="/home/article?id={{@$value._id}}" class="thumbnail">
+            <img src="{{$value.cover}}">
+        </a>
+        <div class="content">
+            <a class="article-title" href="/home/article?id={{@$value._id}}">{{$value.title}}</a>
+            <div class="article-info">
+                <span class="author">{{$value.author.username}}</span>
+                <span>{{dateFormat($value.publishDate)}}</span>
+            </div>
+            <!-- 去除内容中的html标记 -->
+            <div class="brief">
+                <!--  -->
+                {{@$value.content.substr(0,100) + '...'}}
+                    <!--  -->
+            </div>
+        </div>
+    </li>
+    {{/each}}
+</ul>
+<!-- 文章列表结束 -->
+<!-- 
+    "page": 1,
+  "size": 6,
+  "total": 6,
+  "records": [
+    {
+      "cover": "\\uploads\\upload_3e1045e8c1f7acba7fae8faffbbf7710.jpg",
+      "_id": "5f3968b8d3586226748cf646",
+      "title": "阿里巴巴旗下的1688－VR市场 打造批发新体验",
+      "author": {
+        "state": 0,
+        "_id": "5f390e12e2f6772384599bb7",
+        "username": "星云clone",
+        "email": "admin@qq.com",
+        "password": "$2b$10$PcmsXQMg/dXhC8OOsVY7I.UK9oJVZE8EC8NknI9wbCOPEw2EFciUi",
+        "role": "超级管理员",
+        "__v": 0
+      }
+      "pages": 1, "display": [ 1 ]
+ -->
+<!-- 分页开始 -->
+<div class="page w1100">
+    <a href="/home/?page={{page - 1}}" style="display: {{page -1 < 1 ? 'none': 'inline'}};">上一页</a>
+    <!--  -->
+    {{each articles.display}}
+    <a href="/home/?page={{$value}}" class="{{page == $value? 'active': ''}}">{{$value}}</a>
+    <!--  -->
+    {{/each}}
+    <a href="/home/?page={{page -0 + 1}}" style="display: {{page -0 + 1 <= pages ? 'inline' : 'none'}};">下一页</a>
+</div>
+<!-- 分页结束 -->
+{{/block}}

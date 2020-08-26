@@ -1,0 +1,59 @@
+{{extend './common/layout.art'}}
+<!--  -->
+{{block 'main'}}
+<!--  -->
+<div class="login-body">
+    <div class="login-container">
+        <h4 class="title">博客管理员登录</h4>
+        <div class="login">
+            <!-- action设置请求地址 -->
+            <form id="loginForm" action="/admin/login" method="post">
+                <div class="form-group">
+                    <label>邮件</label>
+                    <input name="email" type="email" class="form-control" placeholder="请输入邮件地址">
+                </div>
+                <div class="form-group">
+                    <label>密码</label>
+                    <input name="password" type="password" class="form-control" placeholder="请输入密码">
+                </div>
+                <button type="submit" class="btn btn-primary">登录</button>
+            </form>
+        </div>
+        <div class="tips"></div>
+    </div>
+</div>
+{{/block}}
+<!-- 写入jquery代码，实现阻止默认行为的功能 -->
+{{block 'script'}}
+<script src="/admin/js/common.js"></script>
+<script>
+    // function serializeToJson(form) {
+    //     var result = {}
+    //     var v = form.serializeArray()
+    //     v.forEach(function(item) {
+    //         // 方括号和点都能用来为对象添加属性
+    //         result[item.name] = item.value
+    //     })
+    //     return result
+    // }
+    // 为表单添加事件   提交事件 submit
+    $('#loginForm').on('submit', function() {
+        // sserializArray()方法能够获取表单中的数据
+        // 返回结果为一个数组，里面存储着对象[{name:'email', value:'用户输入的内容'}]
+        var result = serializeToJson($(this))
+            // 用户账号密码判断程序
+        if (result.email.trim().length == 0) {
+            alert('请输入邮箱地址')
+            return false
+        }
+        if (result.password.trim().length == 0) {
+            alert('请输入密码')
+            return false
+        }
+
+        // 阻止表单默认提交的行为
+        // return false
+    })
+</script>
+<!--  -->
+{{/block}}

@@ -1,0 +1,14 @@
+{{extend './common/layout.art'}}
+<!--  -->
+{{block 'main'}}
+<p class="bg-danger error">{{ msg }}</p>
+{{/block}}
+<!--  -->
+{{block 'script'}}
+<script>
+    setTimeout(function() {
+        // 要填写绝对路径
+        location.href = '/admin/login'
+    }, 3000)
+</script>
+{{/block}}
